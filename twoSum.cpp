@@ -5,10 +5,10 @@ class Solution {
 public:
     std::vector<int> twoSum(std::vector<int>& nums, int target) {
         std::unordered_map<int, int> numMap;
-        for(int i = 0; i < nums.size(); ++i){
+        for(size_t i = 0; i < nums.size(); ++i){
             int complement = target - nums[i];
             if(numMap.find(complement) != numMap.end()){
-                return {numMap[complement], i};
+                return {numMap[complement], static_cast<int>(i)};
             }
             numMap[nums[i]] = i;
         }
@@ -17,9 +17,9 @@ public:
 };
  
 int main() {
-    std::vector<int> nums = {2,7,11,15};
+    std::vector<int> nums = {3,2,4};
     Solution solution;
-    std::vector<int> result = solution.twoSum(nums,9);
+    std::vector<int> result = solution.twoSum(nums,6);
     for(int idx : result)std::cout<<idx<<" ";
     std::cout<<'\n';
     return 0;
