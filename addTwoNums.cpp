@@ -1,3 +1,5 @@
+#include <iostream>
+#include <vector>
 struct ListNode {
     int val;
     ListNode *next;
@@ -5,6 +7,20 @@ struct ListNode {
     ListNode(int x) : val(x), next(nullptr) {}
     ListNode(int x, ListNode *nxt) : val(x), next(nxt) {}
 };
+ListNode* build(std::vector<int> digits){
+    ListNode head;
+    ListNode* tail = &head;
+    for(int d : digits){
+        tail->next = new ListNode(d);
+        tail = tail->next;
+    }
+    return head.next;
+}
+void print(ListNode* head){
+    for(; head != nullptr; head =head->next){
+        std::cout <<head->val<<" ";
+    }std::cout<<'\n';
+}
 class Solution {
     public:
         ListNode* addTwoNums(ListNode* l1, ListNode* l2){
@@ -32,6 +48,9 @@ class Solution {
         
 };
 int main(){
-
+    ListNode* l1 = build({2,4,3});
+    ListNode* l2 = build({5,6,4});
+    Solution sln;
+    print(sln.addTwoNums(l1,l2));
     return 0;
 }
