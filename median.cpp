@@ -8,8 +8,8 @@ public:
 
         size_t m = nums1.size();
         size_t n = nums2.size();
-
-        
+        int lo{0}; int hi = m;
+        int half =  (m + n + 1)/ 2;
     }
 };
 int main() {
