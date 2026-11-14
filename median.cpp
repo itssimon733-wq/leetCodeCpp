@@ -10,6 +10,11 @@ public:
         size_t n = nums2.size();
         int lo{0}; int hi = m;
         int half =  (m + n + 1)/ 2;
+
+        while(lo <= hi) {
+            int i = (lo + hi) / 2;
+            int j = half - 1;
+        }
     }
 };
 int main() {
