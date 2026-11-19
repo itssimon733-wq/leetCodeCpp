@@ -1,0 +1,73 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <random>
+#include <climits>
+
+class Solution {
+public:
+    double findMedianSortedArrays(std::vector<int>& nums1, std::vector<int>& nums2) {
+        
+        if(nums1.size() > nums2.size()) return findMedianSortedArrays(nums2, nums1);
+
+        size_t m = nums1.size();
+        size_t n = nums2.size();
+        int lo{0}; int hi = m;
+        int half =  (m + n + 1)/ 2;
+
+        while(lo <= hi) {
+            int i = (lo + hi) / 2;
+            int j = half - i;
+
+            int aLeft  = (i == 0) ? INT_MIN : nums1[i - 1];
+            int aRight = (i == m) ? INT_MAX : nums1[i];
+            int bLeft  = (j == 0) ? INT_MIN : nums2[j - 1];
+            int bRight = (j == n) ? INT_MAX : nums2[j];
+
+            if (aLeft <= bRight && bLeft <= aRight) {
+                if ((m + n) % 2) return std::max(aLeft, bLeft);
+                return (std::max(aLeft, bLeft) + std::min(aRight, bRight)) / 2.0;
+            } else if (aLeft > bRight) {
+                hi = i - 1;
+            } else {
+                lo = i + 1;
+            }
+        }
+        return 0.0;
+        
+    }
+};
+
+double bruteMedian(std::vector<int> a, const std::vector<int>& b) {
+    a.insert(a.end(), b.begin(), b.end());
+    std::sort(a.begin(), a.end());
+    size_t n = a.size();
+    return n % 2 ? a[n / 2] : (a[n / 2 - 1] + a[n / 2]) / 2.0;
+}
+
+std::vector<int> randomSorted(std::mt19937& rng, int size) {
+    std::uniform_int_distribution<int> val(-5, 5);
+    std::vector<int> v(size);
+    for (int& x : v) x = val(rng);
+    std::sort(v.begin(), v.end());
+    return v;
+}
+
+int main() {
+    std::mt19937 rng(42);
+    std::uniform_int_distribution<int> len(0, 6);
+    Solution s;
+
+    for (int t = 0; t < 10000; ++t) {
+        auto a = randomSorted(rng, len(rng));
+        auto b = randomSorted(rng, len(rng));
+        if (a.empty() && b.empty()) continue;   // LeetCode never gives this
+
+        if (s.findMedianSortedArrays(a, b) != bruteMedian(a, b)) {
+            std::cout << "FAILED on test " << t << "\n";
+            return 1;
+        }
+    }
+    std::cout << "all tests passed\n";
+    return 0;
+}
