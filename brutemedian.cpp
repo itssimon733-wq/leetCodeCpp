@@ -59,7 +59,7 @@ int main() {
     Solution s;
 
     for (int t = 0; t < 10000; ++t) {
-        auto a = randomSorted(rng, len(rng));
+        auto a = randomSorted(rng, len(rng));//auto lets the compiler determine which data type the variable is
         auto b = randomSorted(rng, len(rng));
         if (a.empty() && b.empty()) continue;   // LeetCode never gives this
 
