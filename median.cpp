@@ -6,12 +6,16 @@ class Solution {
 public:
     double findMedianSortedArrays(std::vector<int>& nums1, std::vector<int>& nums2) {
         
-        if(nums1.size() > nums2.size()) return findMedianSortedArrays(nums2, nums1);
+        if(nums1.size() > nums2.size()) return findMedianSortedArrays(nums2, nums1);/* this is to make sure nums1 is always the smaller vector 
+                                                                                    so if the condition is met the parameters (nems2,num1) are passed in as nums1 and nums2
+                                                                                    respectively since it is a recursion.
+                                                                                    */
 
-        size_t m = nums1.size();
-        size_t n = nums2.size();
-        int lo{0}; int hi = m;
-        int half =  (m + n + 1)/ 2;
+        size_t m = nums1.size();//size of nums1 --3
+        size_t n = nums2.size();//size of nums2 --4
+        int lo{0}; //lowest possible partition
+        int hi = m; //highest possible partition in nums1 
+        int half =  (m + n + 1)/ 2; //the half way point of the two combined arrays 3+4+1=8 8/2 = 4
 
         while(lo <= hi) {
             int i = (lo + hi) / 2;
@@ -37,7 +41,7 @@ public:
 };
 int main() {
     std::vector<int> nums1 = {1, 2, 3};
-    std::vector<int> nums2 = {3, 4};
+    std::vector<int> nums2 = {4, 5, 6, 7};
     Solution sln;
     std::cout << "Median: "<< sln.findMedianSortedArrays(nums1, nums2) << std::endl;
     return 0;
