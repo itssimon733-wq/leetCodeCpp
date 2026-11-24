@@ -102,11 +102,12 @@ public:
                                                                 */
                 hi = i - 1;
             } else {
-                lo = i + 1;/*After :
-                                pass1 lo = 2
-                                pass2 lo = 3
-                                pass3: not reached
-                           */
+                lo = i + 1;
+                                                                /*After :
+                                                                    pass1 lo = 2
+                                                                    pass2 lo = 3
+                                                                    pass3: not reached
+                                                                */
             }
         }
         return 0.0;
