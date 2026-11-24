@@ -13,48 +13,79 @@ public:
 
         size_t m = nums1.size();        //size of nums1 --3
         size_t n = nums2.size();        //size of nums2 --4
-        
+
         int lo{0};                      /*lowest possible partition :
                                                 pass1 lo = 0
                                                 pass2 lo = 2
                                         */
 
-        int hi = m;                     //highest possible partition in nums1 --3
-        int half =  (m + n + 1)/ 2;     //the half way point of the two combined arrays 3+4+1=8 8/2 = 4
+        int hi = m;                     /*highest possible partition in nums1 :
+                                                pass1 hi = 3
+                                                pass2 hi = 3
+                                        */
+        int half =  (m + n + 1)/ 2;     /*the half way point of the two combined arrays :
+                                                pass1 half = 4
+                                                pass2 half = 4
+                                        */
 
         while(lo <= hi) {
             int i = (lo + hi) / 2;      /*this determines where our imaginary partition starts in nums1. 
-                                                    pass1 i = 1 - our first cut will be after the 1st element(1)
+                                                pass1 i = 1 - cut is after 1st element in nums1 = 1
+                                                pass2 i = 2 - cut is after 2nd element in nums1 = 2
                                         */
 
             int j = half - i;           /*this determines where our imaginary partition starts in nums2. 
-                                                    pass1 j = 3 - our cut will be after the 3rd element(6)
+                                                pass1 j = 3 - cut is after 3rd element in nums2 = 6
+                                                pass1 j = 2 - cut is after 2nd element in nums2 = 5
                                         */
 
 
                                         /*This means that our left partion will contain:
-                                                        pass1 = {1,4,5,6}    
+                                                        pass1 = {1,4,5,6}   
+                                                        pass2 = {1,2,4,5} 
                                         And the right partition will contain:
                                                         pass1 = {2,3,7}
+                                                        pass2 = {3,6,7}
                                         But to have a correct partition:
                                                 1. The left partition must be >= to the right 
                                                 2. The largest left <=  smallest right 
-                                        But we have pas1 - 6 > 2 so we need to find the correct partition
+                                        But we have :
+                                                        pass1 - 6 > 2 so we need to find the correct partition
+                                                        pass2 - 5 > 3 so we need to find the correct partition
                                         */
 
-            int aLeft  = (i == 0) ? INT_MIN : nums1[i - 1];     //(i == 0) false: aLeft = 1  : last element of nums1 left partition
-            int aRight = (i == m) ? INT_MAX : nums1[i];         //(1 == m) false: aRight = 2 : first element of num2 right partition
-            int bLeft  = (j == 0) ? INT_MIN : nums2[j - 1];     //(j == 0) false: bLeft = 6  : last element of mums2 left partition
-            int bRight = (j == n) ? INT_MAX : nums2[j];         //(j == n) false: bRight = 7 : last element of nums2 right partition
+            int aLeft  = (i == 0) ? INT_MIN : nums1[i - 1];     /*
+                                                                    pass1: (i == 0) false: aLeft = 1  : last element of nums1 left partition
+                                                                    pass2: (i == 0) false: aLeft = 2  : last element of nums1 left partitoin
+                                                                */
+            int aRight = (i == m) ? INT_MAX : nums1[i];         /*
+                                                                    pass1: (i == m) false: aRight = 2 : first element of num2 right partition
+                                                                    pass2: (i == m) false: aRight = 3 : first element of num2 right partition
+                                                                */
+            int bLeft  = (j == 0) ? INT_MIN : nums2[j - 1];     /*
+                                                                    pass1: (j == 0) false: bLeft = 6  : last element of mums2 left partition
+                                                                    pass2: (j == 0) false: bLeft = 5  : last element of mums2 left partition
+                                                                */
+            int bRight = (j == n) ? INT_MAX : nums2[j];         /*
+                                                                    pass1: (j == n) false: bRight = 7 : first element of nums2 right partition
+                                                                    pass2: (j == n) false: bRight = 6 : first element of nums2 right partition
+                                                                */
 
-            if (aLeft <= bRight && bLeft <= aRight) { //first condition: true second: false :partition = inavalid
+            if (aLeft <= bRight && bLeft <= aRight) {           /*
+                                                                    pass1: first condition: true, second: false :partition = inavalid
+                                                                    pass2: first condition: true, second: false :partition = inavalid
+                                                                */
                 if ((m + n) % 2) return std::max(aLeft, bLeft);
                 return (std::max(aLeft, bLeft) + std::min(aRight, bRight)) / 2.0;
-            } else if (aLeft > bRight) {//false
+            } else if (aLeft > bRight) {                        /*
+                                                                    pass1: false
+                                                                    pass2: false
+                                                                */
                 hi = i - 1;
             } else {
                 lo = i + 1;/*After :
                                 pass1 lo = 2
+                                pass2 lo = 3
                            */
             }
         }
