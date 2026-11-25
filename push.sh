@@ -22,7 +22,7 @@ fi
 # Push to GitHub and GitLab
 echo "🌐 Pushing to GitHub and GitLab..."
 
-if git push ; then
+if git push -u origin main; then
     echo "🎉 Successfully pushed!"
 else
     echo "⚠️ Push failed. Check your remote configuration."
