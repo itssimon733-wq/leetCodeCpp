@@ -46,7 +46,7 @@ double bruteMedian(std::vector<int> a, const std::vector<int>& b) {
 }
 
 std::vector<int> randomSorted(std::mt19937& rng, int size) {
-    std::uniform_int_distribution<int> val(-5, 5);
+    std::uniform_int_distribution<int> val(-5, 5);//certainly things I've never seen
     std::vector<int> v(size);
     for (int& x : v) x = val(rng);
     std::sort(v.begin(), v.end());
