@@ -38,8 +38,8 @@ public:
     }
 };
 
-double bruteMedian(std::vector<int> a, const std::vector<int>& b) {
-    a.insert(a.end(), b.begin(), b.end());
+double bruteMedian(std::vector<int> a, const std::vector<int>& b) { //takes in two vectors a and b
+    a.insert(a.end(), b.begin(), b.end());// where to start inserting = a.end(), where the values to insert start = b.begin, where to stop the values = b.end
     std::sort(a.begin(), a.end());
     size_t n = a.size();
     return n % 2 ? a[n / 2] : (a[n / 2 - 1] + a[n / 2]) / 2.0;
